@@ -1,3 +1,6 @@
+import glob
+import os
+
 import streamlit as st
 import sqlite3
 
@@ -77,9 +80,10 @@ user_state = get_user_state()
 
 # Scrolling comic images with like/dislike buttons
 with st.container():
-    for i in range(10):
+    image_paths = glob.glob("boards/*.jpg")
+    for i, image_path in enumerate(sorted(image_paths)):
         likes, dislikes = get_ratings(i + 1)
-        st.image("dummy_image.jpg", caption=f"Comic Page {i + 1}", use_column_width=True)
+        st.image(image_path, caption=os.path.basename(image_path), use_column_width=True)
 
         col1, col2, col3 = st.columns([1, 1, 1])
 
